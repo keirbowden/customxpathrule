@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<ruleset name="Bob Buzzard"
+   xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 https://pmd.sourceforge.io/ruleset_2_0_0.xsd">
+
+   <description>
+      Bob Buzzard's custom rules.
+   </description>
+   <rule name="SoqlOnlyInTestAndAccessorClasses" language="apex" message="SOQL queries can only appear in test methods and accessor classes" class="net.sourceforge.pmd.lang.apex.rule.ApexXPathRule">
+      <description>
+      Checks that SOQL queries are only present in test methods and accessor
+      classes.
+      </description>
+      <priority>3</priority>
+      <properties>
+         <property name="version" value="2.0"/>
+         <property name="xpath">
+            <value>
+               <![CDATA[
+//UserClass[not(ends-with(@Image, 'Accessor'))]/Method/ModifierNode[@Test=false()]/..//(SoqlExpression | MethodCallExpression[lower-case(@FullMethodName)='database.query'])
+]]>
+            </value>
+         </property>
+      </properties>
+   </rule>
+</ruleset>
